@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life OS</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f4f0; color: #1a1a18; min-height: 100vh; padding: 2rem 1rem; }
+.container { max-width: 780px; margin: 0 auto; }
+.header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2rem; }
+.header h1 { font-size: 20px; font-weight: 500; }
+.header span { font-size: 13px; color: #888780; }
+.section-title { font-size: 11px; font-weight: 500; color: #888780; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 8px; }
+.card { background: #fff; border: 0.5px solid rgba(0,0,0,0.12); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 0; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+@media (max-width: 600px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+.focus-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); }
+.focus-item:last-child { border-bottom: none; padding-bottom: 0; }
+.focus-item:first-child { padding-top: 0; }
+.badge { font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+.badge-active { background: #FAEEDA; color: #633806; }
+.badge-next { background: #E6F1FB; color: #0C447C; }
+.badge-later { background: #F1EFE8; color: #5F5E5A; }
+.focus-label { font-size: 14px; flex: 1; }
+.focus-target { font-size: 12px; color: #888780; }
+.task-item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); cursor: pointer; }
+.task-item:last-child { border-bottom: none; padding-bottom: 0; }
+.task-item:first-child { padding-top: 0; }
+.checkbox { width: 15px; height: 15px; border: 1.5px solid rgba(0,0,0,0.2); border-radius: 3px; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.checkbox.done { background: #1D9E75; border-color: #1D9E75; }
+.checkbox.done::after { content: ''; display: block; width: 8px; height: 5px; border-left: 1.5px solid white; border-bottom: 1.5px solid white; transform: rotate(-45deg) translate(0,-1px); }
+.task-text { font-size: 14px; line-height: 1.4; transition: color 0.15s; }
+.task-text.done { color: #B4B2A9; text-decoration: line-through; }
+.roadmap-item { display: flex; gap: 12px; padding: 8px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); align-items: flex-start; }
+.roadmap-item:last-child { border-bottom: none; padding-bottom: 0; }
+.roadmap-item:first-child { padding-top: 0; }
+.rdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.dot-active { background: #EF9F27; }
+.dot-next { background: #378ADD; }
+.dot-later { background: #B4B2A9; }
+.roadmap-q { font-size: 11px; color: #888780; margin-bottom: 1px; }
+.roadmap-label { font-size: 13px; }
+.learn-item { padding: 8px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); }
+.learn-item:last-child { border-bottom: none; padding-bottom: 0; }
+.learn-item:first-child { padding-top: 0; }
+.learn-name { font-size: 13px; margin-bottom: 5px; display: flex; justify-content: space-between; }
+.learn-status { font-size: 11px; color: #888780; }
+.bar-wrap { height: 4px; background: rgba(0,0,0,0.08); border-radius: 4px; }
+.bar { height: 4px; border-radius: 4px; }
+.pillar-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 13px; color: #5F5E5A; border-bottom: 0.5px solid rgba(0,0,0,0.08); }
+.pillar-item:last-child { border-bottom: none; }
+.pillar-item:first-child { padding-top: 0; }
+.pdot { width: 6px; height: 6px; border-radius: 50%; background: #1D9E75; flex-shrink: 0; }
+.fin-label { font-size: 12px; color: #888780; margin-bottom: 3px; }
+.fin-value { font-size: 18px; font-weight: 500; }
+.fin-sub { font-size: 12px; color: #888780; margin-top: 2px; }
+.divider { border-top: 0.5px solid rgba(0,0,0,0.08); margin: 10px 0; }
+.date-display { font-size: 13px; color: #888780; margin-bottom: 1.75rem; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Life OS</h1>
+    <span id="dateDisplay"></span>
+  </div>
+
+  <p class="section-title">Current focus</p>
+  <div class="card">
+    <div class="focus-item">
+      <span class="badge badge-active">Active</span>
+      <span class="focus-label">Job change</span>
+      <span class="focus-target">2026 Q2</span>
+    </div>
+    <div class="focus-item">
+      <span class="badge badge-next">Next</span>
+      <span class="focus-label">IELTS 7.0</span>
+      <span class="focus-target">Aug 2026</span>
+    </div>
+    <div class="focus-item">
+      <span class="badge badge-next">Next</span>
+      <span class="focus-label">GitHub portfolio</span>
+      <span class="focus-target">Q3 2026</span>
+    </div>
+    <div class="focus-item">
+      <span class="badge badge-later">Later</span>
+      <span class="focus-label">Netherlands relocation</span>
+      <span class="focus-target">Long-term</span>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-bottom: 1.25rem;">
+    <div>
+      <p class="section-title">This week · W14</p>
+      <div class="card">
+        <div class="task-item" onclick="toggle(this)">
+          <div class="checkbox done"></div>
+          <span class="task-text done">AWS SAA prep</span>
+        </div>
+        <div class="task-item" onclick="toggle(this)">
+          <div class="checkbox"></div>
+          <span class="task-text">JAC面談</span>
+        </div>
+        <div class="task-item" onclick="toggle(this)">
+          <div class="checkbox"></div>
+          <span class="task-text">求人2社に応募</span>
+        </div>
+        <div class="task-item" onclick="toggle(this)">
+          <div class="checkbox"></div>
+          <span class="task-text">えにし 最終確認</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="section-title">Roadmap 2026</p>
+      <div class="card">
+        <div class="roadmap-item">
+          <div class="rdot dot-active"></div>
+          <div><p class="roadmap-q">Q2 · Apr–Jun</p><p class="roadmap-label">転職活動</p></div>
+        </div>
+        <div class="roadmap-item">
+          <div class="rdot dot-next"></div>
+          <div><p class="roadmap-q">Q3 · Jul–Sep</p><p class="roadmap-label">IELTS + Portfolio</p></div>
+        </div>
+        <div class="roadmap-item">
+          <div class="rdot dot-later"></div>
+          <div><p class="roadmap-q">Q4 · Oct–Dec</p><p class="roadmap-label">新職場 + 蘭調査</p></div>
+        </div>
+        <div class="roadmap-item">
+          <div class="rdot dot-later"></div>
+          <div><p class="roadmap-q">Long-term</p><p class="roadmap-label">Netherlands</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div>
+      <p class="section-title">Learning</p>
+      <div class="card">
+        <div class="learn-item">
+          <div class="learn-name"><span>IELTS</span><span class="learn-status">Starting soon</span></div>
+          <div class="bar-wrap"><div class="bar" style="width:0%;background:#378ADD"></div></div>
+        </div>
+        <div class="learn-item">
+          <div class="learn-name"><span>AWS SAA</span><span class="learn-status">Complete</span></div>
+          <div class="bar-wrap"><div class="bar" style="width:100%;background:#1D9E75"></div></div>
+        </div>
+        <div class="learn-item">
+          <div class="learn-name"><span>React / TS</span><span class="learn-status">Ongoing</span></div>
+          <div class="bar-wrap"><div class="bar" style="width:60%;background:#7F77DD"></div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="section-title">Finance</p>
+      <div class="card">
+        <div class="fin-label">Salary target</div>
+        <div class="fin-value">550万円+</div>
+        <div class="divider"></div>
+        <div class="fin-label">June bonus →</div>
+        <div style="font-size:13px;">リボ払い完済</div>
+        <div class="fin-sub">→ debit only</div>
+      </div>
+    </div>
+    <div>
+      <p class="section-title">Pillars</p>
+      <div class="card">
+        <div class="pillar-item"><div class="pdot"></div>Environment over willpower</div>
+        <div class="pillar-item"><div class="pdot"></div>Stay private</div>
+        <div class="pillar-item"><div class="pdot"></div>Franklin's 13 virtues</div>
+        <div class="pillar-item"><div class="pdot"></div>3:50 AM, every day</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('ja-JP', {year:'numeric',month:'2-digit',day:'2-digit',weekday:'short'});
+function toggle(el) {
+  const cb = el.querySelector('.checkbox');
+  const txt = el.querySelector('.task-text');
+  cb.classList.toggle('done');
+  txt.classList.toggle('done');
+}
+</script>
+</body>
+</html>
