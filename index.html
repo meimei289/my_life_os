@@ -6,14 +6,19 @@
 <title>Life OS</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f4f0; color: #1a1a18; min-height: 100vh; padding: 2rem 1rem; }
-.container { max-width: 780px; margin: 0 auto; }
-.header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2rem; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f4f0; color: #1a1a18; min-height: 100vh; }
+.container { max-width: 780px; margin: 0 auto; padding: 2rem 1rem; }
+.header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.5rem; }
 .header h1 { font-size: 20px; font-weight: 500; }
 .header span { font-size: 13px; color: #888780; }
+.tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 0.5px solid rgba(0,0,0,0.12); }
+.tab { font-size: 13px; font-weight: 500; padding: 8px 16px; cursor: pointer; color: #888780; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.15s; }
+.tab.active { color: #1a1a18; border-bottom-color: #1a1a18; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 .section-title { font-size: 11px; font-weight: 500; color: #888780; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 8px; }
 .card { background: #fff; border: 0.5px solid rgba(0,0,0,0.12); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; }
 .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 @media (max-width: 600px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
 .focus-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); }
@@ -57,7 +62,17 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .fin-value { font-size: 18px; font-weight: 500; }
 .fin-sub { font-size: 12px; color: #888780; margin-top: 2px; }
 .divider { border-top: 0.5px solid rgba(0,0,0,0.08); margin: 10px 0; }
-.date-display { font-size: 13px; color: #888780; margin-bottom: 1.75rem; }
+.journal-entry { padding: 14px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); }
+.journal-entry:last-child { border-bottom: none; }
+.journal-entry:first-child { padding-top: 0; }
+.journal-date { font-size: 11px; font-weight: 500; color: #888780; letter-spacing: 0.05em; margin-bottom: 4px; }
+.journal-title { font-size: 15px; font-weight: 500; color: #1a1a18; margin-bottom: 4px; }
+.journal-preview { font-size: 13px; color: #5F5E5A; line-height: 1.6; }
+.journal-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.tag { font-size: 11px; background: #f5f4f0; color: #888780; padding: 2px 8px; border-radius: 20px; border: 0.5px solid rgba(0,0,0,0.1); }
+.empty-state { text-align: center; padding: 3rem 0; color: #888780; font-size: 14px; }
+.empty-state p { margin-bottom: 6px; }
+.empty-sub { font-size: 12px; color: #B4B2A9; }
 </style>
 </head>
 <body>
@@ -67,122 +82,98 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
     <span id="dateDisplay"></span>
   </div>
 
-  <p class="section-title">Current focus</p>
-  <div class="card">
-    <div class="focus-item">
-      <span class="badge badge-active">Active</span>
-      <span class="focus-label">Job change</span>
-      <span class="focus-target">2026 Q2</span>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('dashboard')">Dashboard</div>
+    <div class="tab" onclick="switchTab('journal')">Journal</div>
+  </div>
+
+  <div id="tab-dashboard" class="tab-content active">
+    <p class="section-title">Current focus</p>
+    <div class="card">
+      <div class="focus-item"><span class="badge badge-active">Active</span><span class="focus-label">Job change</span><span class="focus-target">2026 Q2</span></div>
+      <div class="focus-item"><span class="badge badge-next">Next</span><span class="focus-label">IELTS 7.0</span><span class="focus-target">Aug 2026</span></div>
+      <div class="focus-item"><span class="badge badge-next">Next</span><span class="focus-label">GitHub portfolio</span><span class="focus-target">Q3 2026</span></div>
+      <div class="focus-item"><span class="badge badge-later">Later</span><span class="focus-label">Netherlands relocation</span><span class="focus-target">Long-term</span></div>
     </div>
-    <div class="focus-item">
-      <span class="badge badge-next">Next</span>
-      <span class="focus-label">IELTS 7.0</span>
-      <span class="focus-target">Aug 2026</span>
+
+    <div class="grid2">
+      <div>
+        <p class="section-title">This week · W14</p>
+        <div class="card">
+          <div class="task-item" onclick="toggle(this)"><div class="checkbox done"></div><span class="task-text done">AWS SAA prep</span></div>
+          <div class="task-item" onclick="toggle(this)"><div class="checkbox"></div><span class="task-text">JAC面談</span></div>
+          <div class="task-item" onclick="toggle(this)"><div class="checkbox"></div><span class="task-text">求人2社に応募</span></div>
+          <div class="task-item" onclick="toggle(this)"><div class="checkbox"></div><span class="task-text">えにし 最終確認</span></div>
+        </div>
+      </div>
+      <div>
+        <p class="section-title">Roadmap 2026</p>
+        <div class="card">
+          <div class="roadmap-item"><div class="rdot dot-active"></div><div><p class="roadmap-q">Q2 · Apr–Jun</p><p class="roadmap-label">転職活動</p></div></div>
+          <div class="roadmap-item"><div class="rdot dot-next"></div><div><p class="roadmap-q">Q3 · Jul–Sep</p><p class="roadmap-label">IELTS + Portfolio</p></div></div>
+          <div class="roadmap-item"><div class="rdot dot-later"></div><div><p class="roadmap-q">Q4 · Oct–Dec</p><p class="roadmap-label">新職場 + 蘭調査</p></div></div>
+          <div class="roadmap-item"><div class="rdot dot-later"></div><div><p class="roadmap-q">Long-term</p><p class="roadmap-label">Netherlands</p></div></div>
+        </div>
+      </div>
     </div>
-    <div class="focus-item">
-      <span class="badge badge-next">Next</span>
-      <span class="focus-label">GitHub portfolio</span>
-      <span class="focus-target">Q3 2026</span>
-    </div>
-    <div class="focus-item">
-      <span class="badge badge-later">Later</span>
-      <span class="focus-label">Netherlands relocation</span>
-      <span class="focus-target">Long-term</span>
+
+    <div class="grid3">
+      <div>
+        <p class="section-title">Learning</p>
+        <div class="card">
+          <div class="learn-item"><div class="learn-name"><span>IELTS</span><span class="learn-status">Starting soon</span></div><div class="bar-wrap"><div class="bar" style="width:0%;background:#378ADD"></div></div></div>
+          <div class="learn-item"><div class="learn-name"><span>AWS SAA</span><span class="learn-status">Complete</span></div><div class="bar-wrap"><div class="bar" style="width:100%;background:#1D9E75"></div></div></div>
+          <div class="learn-item"><div class="learn-name"><span>React / TS</span><span class="learn-status">Ongoing</span></div><div class="bar-wrap"><div class="bar" style="width:60%;background:#7F77DD"></div></div></div>
+        </div>
+      </div>
+      <div>
+        <p class="section-title">Finance</p>
+        <div class="card">
+          <div class="fin-label">Salary target</div>
+          <div class="fin-value">550万円+</div>
+          <div class="divider"></div>
+          <div class="fin-label">June bonus →</div>
+          <div style="font-size:13px;">リボ払い完済</div>
+          <div class="fin-sub">→ debit only</div>
+        </div>
+      </div>
+      <div>
+        <p class="section-title">Pillars</p>
+        <div class="card">
+          <div class="pillar-item"><div class="pdot"></div>Environment over willpower</div>
+          <div class="pillar-item"><div class="pdot"></div>Stay private</div>
+          <div class="pillar-item"><div class="pdot"></div>Franklin's 13 virtues</div>
+          <div class="pillar-item"><div class="pdot"></div>3:50 AM, every day</div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="grid2" style="margin-bottom: 1.25rem;">
-    <div>
-      <p class="section-title">This week · W14</p>
-      <div class="card">
-        <div class="task-item" onclick="toggle(this)">
-          <div class="checkbox done"></div>
-          <span class="task-text done">AWS SAA prep</span>
-        </div>
-        <div class="task-item" onclick="toggle(this)">
-          <div class="checkbox"></div>
-          <span class="task-text">JAC面談</span>
-        </div>
-        <div class="task-item" onclick="toggle(this)">
-          <div class="checkbox"></div>
-          <span class="task-text">求人2社に応募</span>
-        </div>
-        <div class="task-item" onclick="toggle(this)">
-          <div class="checkbox"></div>
-          <span class="task-text">えにし 最終確認</span>
-        </div>
+  <div id="tab-journal" class="tab-content">
+    <p class="section-title">Journal</p>
+    <div class="card">
+      <div class="journal-entry">
+        <div class="journal-date">2026-04-02 · Thu</div>
+        <div class="journal-title">Life OS を GitHub で構築した日</div>
+        <div class="journal-preview">GitHub MCPをClaude Desktopに接続し、Life OSのダッシュボードをGitHub Pagesで公開した。SSH鍵の設定からconfig修正まで色々あったけど、最終的に動いた。GitHubで人生を管理する感覚が掴めてきた。</div>
+        <div class="journal-tags"><span class="tag">#work</span><span class="tag">#study</span><span class="tag">#win</span></div>
       </div>
     </div>
-    <div>
-      <p class="section-title">Roadmap 2026</p>
-      <div class="card">
-        <div class="roadmap-item">
-          <div class="rdot dot-active"></div>
-          <div><p class="roadmap-q">Q2 · Apr–Jun</p><p class="roadmap-label">転職活動</p></div>
-        </div>
-        <div class="roadmap-item">
-          <div class="rdot dot-next"></div>
-          <div><p class="roadmap-q">Q3 · Jul–Sep</p><p class="roadmap-label">IELTS + Portfolio</p></div>
-        </div>
-        <div class="roadmap-item">
-          <div class="rdot dot-later"></div>
-          <div><p class="roadmap-q">Q4 · Oct–Dec</p><p class="roadmap-label">新職場 + 蘭調査</p></div>
-        </div>
-        <div class="roadmap-item">
-          <div class="rdot dot-later"></div>
-          <div><p class="roadmap-q">Long-term</p><p class="roadmap-label">Netherlands</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid3">
-    <div>
-      <p class="section-title">Learning</p>
-      <div class="card">
-        <div class="learn-item">
-          <div class="learn-name"><span>IELTS</span><span class="learn-status">Starting soon</span></div>
-          <div class="bar-wrap"><div class="bar" style="width:0%;background:#378ADD"></div></div>
-        </div>
-        <div class="learn-item">
-          <div class="learn-name"><span>AWS SAA</span><span class="learn-status">Complete</span></div>
-          <div class="bar-wrap"><div class="bar" style="width:100%;background:#1D9E75"></div></div>
-        </div>
-        <div class="learn-item">
-          <div class="learn-name"><span>React / TS</span><span class="learn-status">Ongoing</span></div>
-          <div class="bar-wrap"><div class="bar" style="width:60%;background:#7F77DD"></div></div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <p class="section-title">Finance</p>
-      <div class="card">
-        <div class="fin-label">Salary target</div>
-        <div class="fin-value">550万円+</div>
-        <div class="divider"></div>
-        <div class="fin-label">June bonus →</div>
-        <div style="font-size:13px;">リボ払い完済</div>
-        <div class="fin-sub">→ debit only</div>
-      </div>
-    </div>
-    <div>
-      <p class="section-title">Pillars</p>
-      <div class="card">
-        <div class="pillar-item"><div class="pdot"></div>Environment over willpower</div>
-        <div class="pillar-item"><div class="pdot"></div>Stay private</div>
-        <div class="pillar-item"><div class="pdot"></div>Franklin's 13 virtues</div>
-        <div class="pillar-item"><div class="pdot"></div>3:50 AM, every day</div>
-      </div>
+    <div class="empty-state">
+      <p>これからここに日記が積み上がっていく</p>
+      <p class="empty-sub">「今日の日記を追加して」とClaudeに話しかけるだけでOK</p>
     </div>
   </div>
 </div>
 <script>
 document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('ja-JP', {year:'numeric',month:'2-digit',day:'2-digit',weekday:'short'});
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ['dashboard','journal'][i] === name));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === 'tab-'+name));
+}
 function toggle(el) {
-  const cb = el.querySelector('.checkbox');
-  const txt = el.querySelector('.task-text');
-  cb.classList.toggle('done');
-  txt.classList.toggle('done');
+  el.querySelector('.checkbox').classList.toggle('done');
+  el.querySelector('.task-text').classList.toggle('done');
 }
 </script>
 </body>
