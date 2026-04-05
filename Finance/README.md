@@ -1,1 +1,0 @@
-moved to Goals/Finance/README.md
