@@ -1,458 +1,1105 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Life OS</title>
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f4f0; color: #1a1a18; min-height: 100vh; }
-.container { max-width: 780px; margin: 0 auto; padding: 2rem 1rem; }
-.header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.5rem; }
-.header h1 { font-size: 20px; font-weight: 500; }
-.header span { font-size: 13px; color: #888780; }
-.tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 0.5px solid rgba(0,0,0,0.12); }
-.tab { font-size: 13px; font-weight: 500; padding: 8px 16px; cursor: pointer; color: #888780; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.15s; }
-.tab.active { color: #1a1a18; border-bottom-color: #1a1a18; }
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-.section-title { font-size: 11px; font-weight: 500; color: #888780; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 8px; }
-.card { background: #fff; border: 0.5px solid rgba(0,0,0,0.12); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; }
-.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-@media (max-width: 600px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life OS</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* Dashboard styles */
-.focus-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); }
-.focus-item:last-child { border-bottom: none; padding-bottom: 0; }
-.focus-item:first-child { padding-top: 0; }
-.badge { font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
-.badge-active { background: #FAEEDA; color: #633806; }
-.badge-next { background: #E6F1FB; color: #0C447C; }
-.badge-later { background: #F1EFE8; color: #5F5E5A; }
-.focus-label { font-size: 14px; flex: 1; }
-.focus-target { font-size: 12px; color: #888780; }
-.task-item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); cursor: pointer; }
-.task-item:last-child { border-bottom: none; padding-bottom: 0; }
-.task-item:first-child { padding-top: 0; }
-.checkbox { width: 15px; height: 15px; border: 1.5px solid rgba(0,0,0,0.2); border-radius: 3px; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
-.checkbox.done { background: #1D9E75; border-color: #1D9E75; }
-.checkbox.done::after { content: ''; display: block; width: 8px; height: 5px; border-left: 1.5px solid white; border-bottom: 1.5px solid white; transform: rotate(-45deg) translate(0,-1px); }
-.task-text { font-size: 14px; line-height: 1.4; transition: color 0.15s; }
-.task-text.done { color: #B4B2A9; text-decoration: line-through; }
-.roadmap-item { display: flex; gap: 12px; padding: 8px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); align-items: flex-start; }
-.roadmap-item:last-child { border-bottom: none; padding-bottom: 0; }
-.roadmap-item:first-child { padding-top: 0; }
-.rdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
-.dot-active { background: #EF9F27; }
-.dot-next { background: #378ADD; }
-.dot-later { background: #B4B2A9; }
-.roadmap-q { font-size: 11px; color: #888780; margin-bottom: 1px; }
-.roadmap-label { font-size: 13px; }
-.learn-item { padding: 8px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); }
-.learn-item:last-child { border-bottom: none; padding-bottom: 0; }
-.learn-item:first-child { padding-top: 0; }
-.learn-name { font-size: 13px; margin-bottom: 5px; display: flex; justify-content: space-between; }
-.learn-status { font-size: 11px; color: #888780; }
-.bar-wrap { height: 4px; background: rgba(0,0,0,0.08); border-radius: 4px; }
-.bar { height: 4px; border-radius: 4px; }
-.pillar-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 13px; color: #5F5E5A; border-bottom: 0.5px solid rgba(0,0,0,0.08); }
-.pillar-item:last-child { border-bottom: none; }
-.pillar-item:first-child { padding-top: 0; }
-.pdot { width: 6px; height: 6px; border-radius: 50%; background: #1D9E75; flex-shrink: 0; }
-.fin-label { font-size: 12px; color: #888780; margin-bottom: 3px; }
-.fin-value { font-size: 18px; font-weight: 500; }
-.fin-sub { font-size: 12px; color: #888780; margin-top: 2px; }
-.divider { border-top: 0.5px solid rgba(0,0,0,0.08); margin: 10px 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f4f0;
+      color: #1a1a18;
+      min-height: 100vh;
+    }
 
-/* Journal existing styles */
-.journal-entry { padding: 14px 0; border-bottom: 0.5px solid rgba(0,0,0,0.08); }
-.journal-entry:last-child { border-bottom: none; }
-.journal-entry:first-child { padding-top: 0; }
-.journal-date { font-size: 11px; font-weight: 500; color: #888780; letter-spacing: 0.05em; margin-bottom: 4px; }
-.journal-title { font-size: 15px; font-weight: 500; color: #1a1a18; margin-bottom: 4px; }
-.journal-preview { font-size: 13px; color: #5F5E5A; line-height: 1.6; }
-.journal-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
-.tag { font-size: 11px; background: #f5f4f0; color: #888780; padding: 2px 8px; border-radius: 20px; border: 0.5px solid rgba(0,0,0,0.1); }
-.empty-state { text-align: center; padding: 3rem 0; color: #888780; font-size: 14px; }
-.empty-state p { margin-bottom: 6px; }
-.empty-sub { font-size: 12px; color: #B4B2A9; }
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
 
-/* Form UI */
-.form-section { margin-bottom: 2rem; }
-.form-tabs { display: flex; gap: 6px; margin-bottom: 1.25rem; }
-.form-tab { font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 20px; cursor: pointer; background: #fff; border: 0.5px solid rgba(0,0,0,0.15); color: #888780; transition: all 0.15s; }
-.form-tab.active { background: #1a1a18; color: #fff; border-color: #1a1a18; }
-.form-panel { display: none; }
-.form-panel.active { display: block; }
-.form-label { font-size: 11px; font-weight: 500; color: #888780; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 5px; display: block; }
-.form-input { width: 100%; font-size: 13px; padding: 8px 10px; border: 0.5px solid rgba(0,0,0,0.15); border-radius: 8px; background: #fafaf8; color: #1a1a18; outline: none; transition: border-color 0.15s; font-family: inherit; }
-.form-input:focus { border-color: #1a1a18; background: #fff; }
-.form-textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
-.form-row { margin-bottom: 12px; }
-.form-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-@media (max-width: 500px) { .form-grid2 { grid-template-columns: 1fr; } }
-.task-category { margin-bottom: 10px; }
-.task-category-label { font-size: 12px; font-weight: 500; color: #5F5E5A; margin-bottom: 5px; display: flex; align-items: center; gap: 6px; }
-.task-inputs { display: flex; flex-direction: column; gap: 5px; }
-.task-input-row { display: flex; gap: 6px; align-items: center; }
-.task-input-row .form-input { flex: 1; }
-.btn-remove { width: 22px; height: 22px; border-radius: 50%; border: 0.5px solid rgba(0,0,0,0.15); background: #fff; cursor: pointer; font-size: 14px; line-height: 1; color: #B4B2A9; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; }
-.btn-remove:hover { background: #fee; color: #c00; border-color: #fcc; }
-.btn-add-task { font-size: 11px; color: #888780; background: none; border: none; cursor: pointer; padding: 2px 0; display: flex; align-items: center; gap: 4px; margin-top: 2px; }
-.btn-add-task:hover { color: #1a1a18; }
-.btn-primary { font-size: 13px; font-weight: 500; padding: 9px 20px; border-radius: 8px; border: none; background: #1a1a18; color: #fff; cursor: pointer; transition: opacity 0.15s; }
-.btn-primary:hover { opacity: 0.8; }
-.btn-secondary { font-size: 13px; padding: 9px 16px; border-radius: 8px; border: 0.5px solid rgba(0,0,0,0.15); background: #fff; color: #5F5E5A; cursor: pointer; transition: all 0.15s; }
-.btn-secondary:hover { background: #f5f4f0; }
-.btn-row { display: flex; gap: 8px; align-items: center; margin-top: 16px; }
-.preview-box { display: none; margin-top: 16px; }
-.preview-box.visible { display: block; }
-.preview-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.preview-label { font-size: 11px; font-weight: 500; color: #888780; letter-spacing: 0.06em; text-transform: uppercase; }
-.btn-copy { font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 6px; border: 0.5px solid rgba(0,0,0,0.15); background: #fff; color: #5F5E5A; cursor: pointer; transition: all 0.15s; }
-.btn-copy:hover { background: #f5f4f0; }
-.btn-copy.copied { background: #E8F7F1; color: #1D9E75; border-color: #b8e8d5; }
-pre.markdown-preview { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; line-height: 1.6; background: #fafaf8; border: 0.5px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 14px; white-space: pre-wrap; word-break: break-word; color: #3a3a38; max-height: 400px; overflow-y: auto; }
-.filepath-hint { font-size: 11px; color: #888780; margin-top: 8px; display: flex; align-items: center; gap: 5px; }
-.filepath-tag { font-family: 'SF Mono', monospace; font-size: 11px; background: #f0efe9; padding: 1px 7px; border-radius: 4px; color: #5F5E5A; }
-</style>
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1.5rem;
+    }
+
+    .header h1 {
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .header span {
+      font-size: 13px;
+      color: #888780;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 2rem;
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.12);
+    }
+
+    .tab {
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      cursor: pointer;
+      color: #888780;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.15s;
+    }
+
+    .tab.active {
+      color: #1a1a18;
+      border-bottom-color: #1a1a18;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 500;
+      color: #888780;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .card {
+      background: #fff;
+      border: 0.5px solid rgba(0, 0, 0, 0.12);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 1.25rem;
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 600px) {
+
+      .grid2,
+      .grid3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Dashboard styles */
+    .focus-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .focus-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .focus-item:first-child {
+      padding-top: 0;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 9px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .badge-active {
+      background: #FAEEDA;
+      color: #633806;
+    }
+
+    .badge-next {
+      background: #E6F1FB;
+      color: #0C447C;
+    }
+
+    .badge-later {
+      background: #F1EFE8;
+      color: #5F5E5A;
+    }
+
+    .focus-label {
+      font-size: 14px;
+      flex: 1;
+    }
+
+    .focus-target {
+      font-size: 12px;
+      color: #888780;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+    }
+
+    .task-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .task-item:first-child {
+      padding-top: 0;
+    }
+
+    .checkbox {
+      width: 15px;
+      height: 15px;
+      border: 1.5px solid rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .checkbox.done {
+      background: #1D9E75;
+      border-color: #1D9E75;
+    }
+
+    .checkbox.done::after {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 5px;
+      border-left: 1.5px solid white;
+      border-bottom: 1.5px solid white;
+      transform: rotate(-45deg) translate(0, -1px);
+    }
+
+    .task-text {
+      font-size: 14px;
+      line-height: 1.4;
+      transition: color 0.15s;
+    }
+
+    .task-text.done {
+      color: #B4B2A9;
+      text-decoration: line-through;
+    }
+
+    .roadmap-item {
+      display: flex;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+      align-items: flex-start;
+    }
+
+    .roadmap-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .roadmap-item:first-child {
+      padding-top: 0;
+    }
+
+    .rdot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    .dot-active {
+      background: #EF9F27;
+    }
+
+    .dot-next {
+      background: #378ADD;
+    }
+
+    .dot-later {
+      background: #B4B2A9;
+    }
+
+    .roadmap-q {
+      font-size: 11px;
+      color: #888780;
+      margin-bottom: 1px;
+    }
+
+    .roadmap-label {
+      font-size: 13px;
+    }
+
+    .learn-item {
+      padding: 8px 0;
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .learn-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .learn-item:first-child {
+      padding-top: 0;
+    }
+
+    .learn-name {
+      font-size: 13px;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .learn-status {
+      font-size: 11px;
+      color: #888780;
+    }
+
+    .bar-wrap {
+      height: 4px;
+      background: rgba(0, 0, 0, 0.08);
+      border-radius: 4px;
+    }
+
+    .bar {
+      height: 4px;
+      border-radius: 4px;
+    }
+
+    .pillar-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      font-size: 13px;
+      color: #5F5E5A;
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .pillar-item:last-child {
+      border-bottom: none;
+    }
+
+    .pillar-item:first-child {
+      padding-top: 0;
+    }
+
+    .pdot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #1D9E75;
+      flex-shrink: 0;
+    }
+
+    .fin-label {
+      font-size: 12px;
+      color: #888780;
+      margin-bottom: 3px;
+    }
+
+    .fin-value {
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .fin-sub {
+      font-size: 12px;
+      color: #888780;
+      margin-top: 2px;
+    }
+
+    .divider {
+      border-top: 0.5px solid rgba(0, 0, 0, 0.08);
+      margin: 10px 0;
+    }
+
+    /* Journal existing styles */
+    .journal-entry {
+      padding: 14px 0;
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .journal-entry:last-child {
+      border-bottom: none;
+    }
+
+    .journal-entry:first-child {
+      padding-top: 0;
+    }
+
+    .journal-date {
+      font-size: 11px;
+      font-weight: 500;
+      color: #888780;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .journal-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #1a1a18;
+      margin-bottom: 4px;
+    }
+
+    .journal-preview {
+      font-size: 13px;
+      color: #5F5E5A;
+      line-height: 1.6;
+    }
+
+    .journal-tags {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 11px;
+      background: #f5f4f0;
+      color: #888780;
+      padding: 2px 8px;
+      border-radius: 20px;
+      border: 0.5px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 0;
+      color: #888780;
+      font-size: 14px;
+    }
+
+    .empty-state p {
+      margin-bottom: 6px;
+    }
+
+    .empty-sub {
+      font-size: 12px;
+      color: #B4B2A9;
+    }
+
+    /* Form UI */
+    .form-section {
+      margin-bottom: 2rem;
+    }
+
+    .form-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-tab {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      background: #fff;
+      border: 0.5px solid rgba(0, 0, 0, 0.15);
+      color: #888780;
+      transition: all 0.15s;
+    }
+
+    .form-tab.active {
+      background: #1a1a18;
+      color: #fff;
+      border-color: #1a1a18;
+    }
+
+    .form-panel {
+      display: none;
+    }
+
+    .form-panel.active {
+      display: block;
+    }
+
+    .form-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: #888780;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .form-input {
+      width: 100%;
+      font-size: 13px;
+      padding: 8px 10px;
+      border: 0.5px solid rgba(0, 0, 0, 0.15);
+      border-radius: 8px;
+      background: #fafaf8;
+      color: #1a1a18;
+      outline: none;
+      transition: border-color 0.15s;
+      font-family: inherit;
+    }
+
+    .form-input:focus {
+      border-color: #1a1a18;
+      background: #fff;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 72px;
+      line-height: 1.5;
+    }
+
+    .form-row {
+      margin-bottom: 12px;
+    }
+
+    .form-grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 500px) {
+      .form-grid2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .task-category {
+      margin-bottom: 10px;
+    }
+
+    .task-category-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #5F5E5A;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .task-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .task-input-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .task-input-row .form-input {
+      flex: 1;
+    }
+
+    .btn-remove {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 0.5px solid rgba(0, 0, 0, 0.15);
+      background: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      color: #B4B2A9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+
+    .btn-remove:hover {
+      background: #fee;
+      color: #c00;
+      border-color: #fcc;
+    }
+
+    .btn-add-task {
+      font-size: 11px;
+      color: #888780;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 2px;
+    }
+
+    .btn-add-task:hover {
+      color: #1a1a18;
+    }
+
+    .btn-primary {
+      font-size: 13px;
+      font-weight: 500;
+      padding: 9px 20px;
+      border-radius: 8px;
+      border: none;
+      background: #1a1a18;
+      color: #fff;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.8;
+    }
+
+    .btn-secondary {
+      font-size: 13px;
+      padding: 9px 16px;
+      border-radius: 8px;
+      border: 0.5px solid rgba(0, 0, 0, 0.15);
+      background: #fff;
+      color: #5F5E5A;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-secondary:hover {
+      background: #f5f4f0;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .preview-box {
+      display: none;
+      margin-top: 16px;
+    }
+
+    .preview-box.visible {
+      display: block;
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .preview-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: #888780;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .btn-copy {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 0.5px solid rgba(0, 0, 0, 0.15);
+      background: #fff;
+      color: #5F5E5A;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-copy:hover {
+      background: #f5f4f0;
+    }
+
+    .btn-copy.copied {
+      background: #E8F7F1;
+      color: #1D9E75;
+      border-color: #b8e8d5;
+    }
+
+    pre.markdown-preview {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      background: #fafaf8;
+      border: 0.5px solid rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #3a3a38;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .filepath-hint {
+      font-size: 11px;
+      color: #888780;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .filepath-tag {
+      font-family: 'SF Mono', monospace;
+      font-size: 11px;
+      background: #f0efe9;
+      padding: 1px 7px;
+      border-radius: 4px;
+      color: #5F5E5A;
+    }
+  </style>
 </head>
+
 <body>
-<div class="container">
-  <div class="header">
-    <h1>Life OS</h1>
-    <span id="dateDisplay"></span>
-  </div>
-
-  <div class="tabs">
-    <div class="tab active" onclick="switchTab('dashboard')">Dashboard</div>
-    <div class="tab" onclick="switchTab('tasks')">Tasks</div>
-    <div class="tab" onclick="switchTab('journal')">Journal</div>
-  </div>
-
-  <!-- DASHBOARD -->
-  <div id="tab-dashboard" class="tab-content active">
-    <p class="section-title">Current focus</p>
-    <div class="card">
-      <div class="focus-item"><span class="badge badge-active">Active</span><span class="focus-label">転職活動</span><span class="focus-target">2026 Q2</span></div>
-      <div class="focus-item"><span class="badge badge-active">Active</span><span class="focus-label">英語基礎固め</span><span class="focus-target">2026 Q2</span></div>
-      <div class="focus-item"><span class="badge badge-next">Next</span><span class="focus-label">IELTS 7.0</span><span class="focus-target">2026 Q4</span></div>
-      <div class="focus-item"><span class="badge badge-later">Later</span><span class="focus-label">🇳🇱 Netherlands relocation</span><span class="focus-target">2027 Q2</span></div>
+  <div class="container">
+    <div class="header">
+      <h1>Life OS</h1>
+      <span id="dateDisplay"></span>
     </div>
 
-    <div class="grid2">
-      <div>
-        <p class="section-title">This week · <span id="weekNum"></span></p>
-        <div class="card">
-          <div class="task-item" onclick="toggle(this)"><div class="checkbox done"></div><span class="task-text done">AWS SAA 取得</span></div>
-          <div class="task-item" onclick="toggle(this)"><div class="checkbox"></div><span class="task-text">JAC 面談</span></div>
-          <div class="task-item" onclick="toggle(this)"><div class="checkbox"></div><span class="task-text">求人2社に応募</span></div>
-          <div class="task-item" onclick="toggle(this)"><div class="checkbox"></div><span class="task-text">英語 発音練習</span></div>
-        </div>
-      </div>
-      <div>
-        <p class="section-title">Roadmap 2026</p>
-        <div class="card">
-          <div class="roadmap-item"><div class="rdot dot-active"></div><div><p class="roadmap-q">Q2 · Apr–Jun</p><p class="roadmap-label">転職・借金完済</p></div></div>
-          <div class="roadmap-item"><div class="rdot dot-next"></div><div><p class="roadmap-q">Q3 · Jul–Sep</p><p class="roadmap-label">新職場 + IELTS開始</p></div></div>
-          <div class="roadmap-item"><div class="rdot dot-later"></div><div><p class="roadmap-q">Q4 · Oct–Dec</p><p class="roadmap-label">IELTS受験 + 蘭調査</p></div></div>
-          <div class="roadmap-item"><div class="rdot dot-later"></div><div><p class="roadmap-q">2027 Q2</p><p class="roadmap-label">🇳🇱 Move to NL</p></div></div>
-        </div>
-      </div>
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('dashboard')">Dashboard</div>
+      <div class="tab" onclick="switchTab('tasks')">Tasks</div>
+      <div class="tab" onclick="switchTab('journal')">Journal</div>
     </div>
 
-    <div class="grid3">
-      <div>
-        <p class="section-title">Learning</p>
-        <div class="card">
-          <div class="learn-item"><div class="learn-name"><span>AWS SAA</span><span class="learn-status">✅ Done</span></div><div class="bar-wrap"><div class="bar" style="width:100%;background:#1D9E75"></div></div></div>
-          <div class="learn-item"><div class="learn-name"><span>IELTS</span><span class="learn-status">Q4 start</span></div><div class="bar-wrap"><div class="bar" style="width:5%;background:#378ADD"></div></div></div>
-          <div class="learn-item"><div class="learn-name"><span>Docker/K8s</span><span class="learn-status">After hire</span></div><div class="bar-wrap"><div class="bar" style="width:15%;background:#7F77DD"></div></div></div>
-        </div>
-      </div>
-      <div>
-        <p class="section-title">Finance</p>
-        <div class="card">
-          <div class="fin-label">移住資金目標</div>
-          <div class="fin-value">200万円</div>
-          <div class="divider"></div>
-          <div class="fin-label">リボ残高</div>
-          <div style="font-size:13px;">〜30万円</div>
-          <div class="fin-sub">6月ボーナスで完済</div>
-        </div>
-      </div>
-      <div>
-        <p class="section-title">Pillars</p>
-        <div class="card">
-          <div class="pillar-item"><div class="pdot"></div>Environment over willpower</div>
-          <div class="pillar-item"><div class="pdot"></div>Stay private</div>
-          <div class="pillar-item"><div class="pdot"></div>Franklin's 13 virtues</div>
-          <div class="pillar-item"><div class="pdot"></div>3:50 AM, every day</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TASKS -->
-  <div id="tab-tasks" class="tab-content">
-    <div class="form-tabs">
-      <div class="form-tab active" onclick="switchFormTab('tasks','weekly')">📋 週次タスク</div>
-      <div class="form-tab" onclick="switchFormTab('tasks','daily')">📌 日次タスク</div>
-    </div>
-
-    <div id="tasks-weekly" class="form-panel active">
+    <!-- DASHBOARD -->
+    <div id="tab-dashboard" class="tab-content active">
+      <p class="section-title">Current focus</p>
       <div class="card">
-        <div class="form-grid2">
-          <div>
-            <label class="form-label">週番号</label>
-            <input class="form-input" id="tw-week" placeholder="例：2026-W15" />
-          </div>
-          <div>
-            <label class="form-label">期間</label>
-            <input class="form-input" id="tw-range" placeholder="例：4/13〜4/19" />
-          </div>
-        </div>
-        <div class="form-row">
-          <label class="form-label">今週のフォーカス（一言）</label>
-          <input class="form-input" id="tw-focus" placeholder="例：面接2社通過させる" />
-        </div>
-        <div style="margin-bottom: 12px;">
-          <label class="form-label">タスク</label>
-          <div id="tw-categories"></div>
-        </div>
-        <div class="form-row">
-          <label class="form-label">先週からの持ち越し</label>
-          <div id="tw-carryover-list" class="task-inputs">
-            <div class="task-input-row">
-              <input class="form-input" placeholder="持ち越しタスク" />
-              <button class="btn-remove" onclick="removeRow(this)">×</button>
+        <div class="focus-item"><span class="badge badge-active">Active</span><span class="focus-label">転職活動</span><span
+            class="focus-target">2026 Q2</span></div>
+        <div class="focus-item"><span class="badge badge-active">Active</span><span
+            class="focus-label">英語基礎固め</span><span class="focus-target">2026 Q2</span></div>
+        <div class="focus-item"><span class="badge badge-next">Next</span><span class="focus-label">IELTS
+            7.0</span><span class="focus-target">2026 Q4</span></div>
+        <div class="focus-item"><span class="badge badge-later">Later</span><span class="focus-label">🇳🇱 Netherlands
+            relocation</span><span class="focus-target">2027 Q2</span></div>
+      </div>
+
+      <div class="grid2">
+        <div>
+          <p class="section-title">This week · <span id="weekNum"></span></p>
+          <div class="card">
+            <div class="task-item" onclick="toggle(this)">
+              <div class="checkbox done"></div><span class="task-text done">AWS SAA 取得</span>
+            </div>
+            <div class="task-item" onclick="toggle(this)">
+              <div class="checkbox"></div><span class="task-text">JAC 面談</span>
+            </div>
+            <div class="task-item" onclick="toggle(this)">
+              <div class="checkbox"></div><span class="task-text">求人2社に応募</span>
+            </div>
+            <div class="task-item" onclick="toggle(this)">
+              <div class="checkbox"></div><span class="task-text">英語 発音練習</span>
             </div>
           </div>
-          <button class="btn-add-task" onclick="addRow('tw-carryover-list','持ち越しタスク')">＋ 追加</button>
         </div>
-        <div class="btn-row">
-          <button class="btn-primary" onclick="generateWeeklyTask()">Markdown を生成</button>
-          <button class="btn-secondary" onclick="clearForm('weekly-task')">クリア</button>
+        <div>
+          <p class="section-title">Roadmap 2026</p>
+          <div class="card">
+            <div class="roadmap-item">
+              <div class="rdot dot-active"></div>
+              <div>
+                <p class="roadmap-q">Q2 · Apr–Jun</p>
+                <p class="roadmap-label">転職・借金完済</p>
+              </div>
+            </div>
+            <div class="roadmap-item">
+              <div class="rdot dot-next"></div>
+              <div>
+                <p class="roadmap-q">Q3 · Jul–Sep</p>
+                <p class="roadmap-label">新職場 + IELTS開始</p>
+              </div>
+            </div>
+            <div class="roadmap-item">
+              <div class="rdot dot-later"></div>
+              <div>
+                <p class="roadmap-q">Q4 · Oct–Dec</p>
+                <p class="roadmap-label">IELTS受験 + 蘭調査</p>
+              </div>
+            </div>
+            <div class="roadmap-item">
+              <div class="rdot dot-later"></div>
+              <div>
+                <p class="roadmap-q">2027 Q2</p>
+                <p class="roadmap-label">🇳🇱 Move to NL</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="preview-box" id="preview-weekly-task">
-        <div class="preview-header">
-          <span class="preview-label">Generated Markdown</span>
-          <button class="btn-copy" onclick="copyMarkdown('preview-weekly-task-content', this)">コピー</button>
+
+      <div class="grid3">
+        <div>
+          <p class="section-title">Learning</p>
+          <div class="card">
+            <div class="learn-item">
+              <div class="learn-name"><span>AWS SAA</span><span class="learn-status">✅ Done</span></div>
+              <div class="bar-wrap">
+                <div class="bar" style="width:100%;background:#1D9E75"></div>
+              </div>
+            </div>
+            <div class="learn-item">
+              <div class="learn-name"><span>IELTS</span><span class="learn-status">Q4 start</span></div>
+              <div class="bar-wrap">
+                <div class="bar" style="width:5%;background:#378ADD"></div>
+              </div>
+            </div>
+            <div class="learn-item">
+              <div class="learn-name"><span>Docker/K8s</span><span class="learn-status">After hire</span></div>
+              <div class="bar-wrap">
+                <div class="bar" style="width:15%;background:#7F77DD"></div>
+              </div>
+            </div>
+          </div>
         </div>
-        <pre class="markdown-preview" id="preview-weekly-task-content"></pre>
-        <p class="filepath-hint">→ <span class="filepath-tag" id="filepath-weekly-task">Tasks/week-YYYY-WXX.md</span> として保存</p>
+        <div>
+          <p class="section-title">Finance</p>
+          <div class="card">
+            <div class="fin-label">移住資金目標</div>
+            <div class="fin-value">200万円</div>
+            <div class="divider"></div>
+            <div class="fin-label">リボ残高</div>
+            <div style="font-size:13px;">〜30万円</div>
+            <div class="fin-sub">6月ボーナスで完済</div>
+          </div>
+        </div>
+        <div>
+          <p class="section-title">Pillars</p>
+          <div class="card">
+            <div class="pillar-item">
+              <div class="pdot"></div>Environment over willpower
+            </div>
+            <div class="pillar-item">
+              <div class="pdot"></div>Stay private
+            </div>
+            <div class="pillar-item">
+              <div class="pdot"></div>Franklin's 13 virtues
+            </div>
+            <div class="pillar-item">
+              <div class="pdot"></div>3:50 AM, every day
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div id="tasks-daily" class="form-panel">
-      <div class="card">
-        <div class="form-grid2">
-          <div>
-            <label class="form-label">日付</label>
-            <input class="form-input" id="td-date" placeholder="例：2026-04-07" />
+    <!-- TASKS -->
+    <div id="tab-tasks" class="tab-content">
+      <div class="form-tabs">
+        <div class="form-tab active" onclick="switchFormTab('tasks','weekly')">📋 週次タスク</div>
+        <div class="form-tab" onclick="switchFormTab('tasks','daily')">📌 日次タスク</div>
+      </div>
+
+      <div id="tasks-weekly" class="form-panel active">
+        <div class="card">
+          <div class="form-grid2">
+            <div>
+              <label class="form-label">週番号</label>
+              <input class="form-input" id="tw-week" placeholder="例：2026-W15" />
+            </div>
+            <div>
+              <label class="form-label">期間</label>
+              <input class="form-input" id="tw-range" placeholder="例：4/13〜4/19" />
+            </div>
           </div>
-          <div>
-            <label class="form-label">曜日</label>
-            <input class="form-input" id="td-day" placeholder="例：火曜日" readonly style="color:#888780;" />
+          <div class="form-row">
+            <label class="form-label">今週のフォーカス（一言）</label>
+            <input class="form-input" id="tw-focus" placeholder="例：面接2社通過させる" />
+          </div>
+          <div style="margin-bottom: 12px;">
+            <label class="form-label">タスク</label>
+            <div id="tw-categories"></div>
+          </div>
+          <div class="form-row">
+            <label class="form-label">先週からの持ち越し</label>
+            <div id="tw-carryover-list" class="task-inputs">
+              <div class="task-input-row">
+                <input class="form-input" placeholder="持ち越しタスク" />
+                <button class="btn-remove" onclick="removeRow(this)">×</button>
+              </div>
+            </div>
+            <button class="btn-add-task" onclick="addRow('tw-carryover-list','持ち越しタスク')">＋ 追加</button>
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="generateWeeklyTask()">Markdown を生成</button>
+            <button class="btn-secondary" onclick="clearForm('weekly-task')">クリア</button>
           </div>
         </div>
-        <div class="form-row">
-          <label class="form-label">明日やること</label>
-          <div id="td-task-list" class="task-inputs">
-            <div class="task-input-row"><input class="form-input" placeholder="タスクを入力" /><button class="btn-remove" onclick="removeRow(this)">×</button></div>
-            <div class="task-input-row"><input class="form-input" placeholder="タスクを入力" /><button class="btn-remove" onclick="removeRow(this)">×</button></div>
-            <div class="task-input-row"><input class="form-input" placeholder="タスクを入力" /><button class="btn-remove" onclick="removeRow(this)">×</button></div>
+        <div class="preview-box" id="preview-weekly-task">
+          <div class="preview-header">
+            <span class="preview-label">Generated Markdown</span>
+            <button class="btn-copy" onclick="copyMarkdown('preview-weekly-task-content', this)">コピー</button>
           </div>
-          <button class="btn-add-task" onclick="addRow('td-task-list','タスクを入力')">＋ 追加</button>
-        </div>
-        <div class="form-row">
-          <label class="form-label">メモ（任意）</label>
-          <textarea class="form-input form-textarea" id="td-memo" placeholder="気になること、確認事項など"></textarea>
-        </div>
-        <div class="btn-row">
-          <button class="btn-primary" onclick="generateDailyTask()">Markdown を生成</button>
-          <button class="btn-secondary" onclick="clearForm('daily-task')">クリア</button>
+          <pre class="markdown-preview" id="preview-weekly-task-content"></pre>
+          <p class="filepath-hint">→ <span class="filepath-tag" id="filepath-weekly-task">Tasks/week-YYYY-WXX.md</span>
+            として保存</p>
         </div>
       </div>
-      <div class="preview-box" id="preview-daily-task">
-        <div class="preview-header">
-          <span class="preview-label">Generated Markdown</span>
-          <button class="btn-copy" onclick="copyMarkdown('preview-daily-task-content', this)">コピー</button>
+
+      <div id="tasks-daily" class="form-panel">
+        <div class="card">
+          <div class="form-grid2">
+            <div>
+              <label class="form-label">日付</label>
+              <input class="form-input" id="td-date" placeholder="例：2026-04-07" />
+            </div>
+            <div>
+              <label class="form-label">曜日</label>
+              <input class="form-input" id="td-day" placeholder="例：火曜日" readonly style="color:#888780;" />
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="form-label">明日やること</label>
+            <div id="td-task-list" class="task-inputs">
+              <div class="task-input-row"><input class="form-input" placeholder="タスクを入力" /><button class="btn-remove"
+                  onclick="removeRow(this)">×</button></div>
+              <div class="task-input-row"><input class="form-input" placeholder="タスクを入力" /><button class="btn-remove"
+                  onclick="removeRow(this)">×</button></div>
+              <div class="task-input-row"><input class="form-input" placeholder="タスクを入力" /><button class="btn-remove"
+                  onclick="removeRow(this)">×</button></div>
+            </div>
+            <button class="btn-add-task" onclick="addRow('td-task-list','タスクを入力')">＋ 追加</button>
+          </div>
+          <div class="form-row">
+            <label class="form-label">メモ（任意）</label>
+            <textarea class="form-input form-textarea" id="td-memo" placeholder="気になること、確認事項など"></textarea>
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="generateDailyTask()">Markdown を生成</button>
+            <button class="btn-secondary" onclick="clearForm('daily-task')">クリア</button>
+          </div>
         </div>
-        <pre class="markdown-preview" id="preview-daily-task-content"></pre>
-        <p class="filepath-hint">→ <span class="filepath-tag" id="filepath-daily-task">Tasks/YYYY-MM-DD.md</span> として保存</p>
+        <div class="preview-box" id="preview-daily-task">
+          <div class="preview-header">
+            <span class="preview-label">Generated Markdown</span>
+            <button class="btn-copy" onclick="copyMarkdown('preview-daily-task-content', this)">コピー</button>
+          </div>
+          <pre class="markdown-preview" id="preview-daily-task-content"></pre>
+          <p class="filepath-hint">→ <span class="filepath-tag" id="filepath-daily-task">Tasks/YYYY-MM-DD.md</span>
+            として保存</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- JOURNAL -->
+    <div id="tab-journal" class="tab-content">
+      <div class="form-tabs">
+        <div class="form-tab active" onclick="switchFormTab('journal','weekly')">📓 週次振り返り</div>
+        <div class="form-tab" onclick="switchFormTab('journal','daily')">✏️ 日次ログ</div>
+        <div class="form-tab" onclick="switchFormTab('journal','log')">📚 過去ログ</div>
+      </div>
+
+      <div id="journal-weekly" class="form-panel active">
+        <div class="card">
+          <div class="form-grid2">
+            <div>
+              <label class="form-label">週番号</label>
+              <input class="form-input" id="jw-week" placeholder="例：2026-W15" />
+            </div>
+            <div>
+              <label class="form-label">期間</label>
+              <input class="form-input" id="jw-range" placeholder="例：4/13〜4/19" />
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="form-label">今週一言</label>
+            <input class="form-input" id="jw-oneliner" placeholder="例：面接2社、手応えあり。英語まだ弱い。" />
+          </div>
+          <div class="form-row">
+            <label class="form-label">✅ 達成したこと</label>
+            <div id="jw-wins" class="task-inputs">
+              <div class="task-input-row"><input class="form-input" placeholder="達成したこと" /><button class="btn-remove"
+                  onclick="removeRow(this)">×</button></div>
+            </div>
+            <button class="btn-add-task" onclick="addRow('jw-wins','達成したこと')">＋ 追加</button>
+          </div>
+          <div class="form-row">
+            <label class="form-label">😓 できなかったこと・持ち越し</label>
+            <div id="jw-misses" class="task-inputs">
+              <div class="task-input-row"><input class="form-input" placeholder="できなかったこと" /><button class="btn-remove"
+                  onclick="removeRow(this)">×</button></div>
+            </div>
+            <button class="btn-add-task" onclick="addRow('jw-misses','できなかったこと')">＋ 追加</button>
+          </div>
+          <div class="form-row">
+            <label class="form-label">💡 気づき・学び</label>
+            <textarea class="form-input form-textarea" id="jw-insights" placeholder="今週気づいたこと、学んだこと"></textarea>
+          </div>
+          <div class="form-row">
+            <label class="form-label">来週のフォーカス</label>
+            <input class="form-input" id="jw-nextfocus" placeholder="例：内定を1社とる" />
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="generateWeeklyJournal()">Markdown を生成</button>
+            <button class="btn-secondary" onclick="clearForm('weekly-journal')">クリア</button>
+          </div>
+        </div>
+        <div class="preview-box" id="preview-weekly-journal">
+          <div class="preview-header">
+            <span class="preview-label">Generated Markdown</span>
+            <button class="btn-copy" onclick="copyMarkdown('preview-weekly-journal-content', this)">コピー</button>
+          </div>
+          <pre class="markdown-preview" id="preview-weekly-journal-content"></pre>
+          <p class="filepath-hint">→ <span class="filepath-tag"
+              id="filepath-weekly-journal">Journal/week-YYYY-WXX.md</span> として保存</p>
+        </div>
+      </div>
+
+      <div id="journal-daily" class="form-panel">
+        <div class="card">
+          <div class="form-grid2">
+            <div>
+              <label class="form-label">日付</label>
+              <input class="form-input" id="jd-date" placeholder="例：2026-04-07" />
+            </div>
+            <div>
+              <label class="form-label">曜日</label>
+              <input class="form-input" id="jd-day" placeholder="例：火曜日" readonly style="color:#888780;" />
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="form-label">今日一言</label>
+            <textarea class="form-input form-textarea" id="jd-log" placeholder="今日を一言で。何があった？どんな気分？"></textarea>
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="generateDailyJournal()">Markdown を生成</button>
+            <button class="btn-secondary" onclick="clearForm('daily-journal')">クリア</button>
+          </div>
+        </div>
+        <div class="preview-box" id="preview-daily-journal">
+          <div class="preview-header">
+            <span class="preview-label">Generated Markdown</span>
+            <button class="btn-copy" onclick="copyMarkdown('preview-daily-journal-content', this)">コピー</button>
+          </div>
+          <pre class="markdown-preview" id="preview-daily-journal-content"></pre>
+          <p class="filepath-hint">→ <span class="filepath-tag" id="filepath-daily-journal">Journal/YYYY-MM-DD.md</span>
+            として保存</p>
+        </div>
+      </div>
+
+      <div id="journal-log" class="form-panel">
+        <p class="section-title">Past entries</p>
+        <div class="card">
+          <div class="journal-entry">
+            <div class="journal-date">2026-04-02 · Thu</div>
+            <div class="journal-title">Life OS を GitHub で構築した日</div>
+            <div class="journal-preview">GitHub MCPをClaude Desktopに接続し、Life OSのダッシュボードをGitHub
+              Pagesで公開した。SSH鍵の設定からconfig修正まで色々あったけど、最終的に動いた。</div>
+            <div class="journal-tags"><span class="tag">#work</span><span class="tag">#study</span><span
+                class="tag">#win</span></div>
+          </div>
+        </div>
+        <div class="empty-state">
+          <p>これからここに日記が積み上がっていく</p>
+          <p class="empty-sub">日次・週次ログを追加して、GitHubにコミットしよう</p>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- JOURNAL -->
-  <div id="tab-journal" class="tab-content">
-    <div class="form-tabs">
-      <div class="form-tab active" onclick="switchFormTab('journal','weekly')">📓 週次振り返り</div>
-      <div class="form-tab" onclick="switchFormTab('journal','daily')">✏️ 日次ログ</div>
-      <div class="form-tab" onclick="switchFormTab('journal','log')">📚 過去ログ</div>
-    </div>
+  <script>
+    const DAYS_JA = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
+    const TASK_CATEGORIES = [
+      { id: 'career', label: '💼 キャリア・転職' },
+      { id: 'language', label: '🗣 英語' },
+      { id: 'finance', label: '💰 お金' },
+      { id: 'netherlands', label: '🇳🇱 オランダ準備' },
+      { id: 'learning', label: '📚 学習' },
+      { id: 'other', label: '🌱 その他' },
+    ];
 
-    <div id="journal-weekly" class="form-panel active">
-      <div class="card">
-        <div class="form-grid2">
-          <div>
-            <label class="form-label">週番号</label>
-            <input class="form-input" id="jw-week" placeholder="例：2026-W15" />
-          </div>
-          <div>
-            <label class="form-label">期間</label>
-            <input class="form-input" id="jw-range" placeholder="例：4/13〜4/19" />
-          </div>
-        </div>
-        <div class="form-row">
-          <label class="form-label">今週一言</label>
-          <input class="form-input" id="jw-oneliner" placeholder="例：面接2社、手応えあり。英語まだ弱い。" />
-        </div>
-        <div class="form-row">
-          <label class="form-label">✅ 達成したこと</label>
-          <div id="jw-wins" class="task-inputs">
-            <div class="task-input-row"><input class="form-input" placeholder="達成したこと" /><button class="btn-remove" onclick="removeRow(this)">×</button></div>
-          </div>
-          <button class="btn-add-task" onclick="addRow('jw-wins','達成したこと')">＋ 追加</button>
-        </div>
-        <div class="form-row">
-          <label class="form-label">😓 できなかったこと・持ち越し</label>
-          <div id="jw-misses" class="task-inputs">
-            <div class="task-input-row"><input class="form-input" placeholder="できなかったこと" /><button class="btn-remove" onclick="removeRow(this)">×</button></div>
-          </div>
-          <button class="btn-add-task" onclick="addRow('jw-misses','できなかったこと')">＋ 追加</button>
-        </div>
-        <div class="form-row">
-          <label class="form-label">💡 気づき・学び</label>
-          <textarea class="form-input form-textarea" id="jw-insights" placeholder="今週気づいたこと、学んだこと"></textarea>
-        </div>
-        <div class="form-row">
-          <label class="form-label">来週のフォーカス</label>
-          <input class="form-input" id="jw-nextfocus" placeholder="例：内定を1社とる" />
-        </div>
-        <div class="btn-row">
-          <button class="btn-primary" onclick="generateWeeklyJournal()">Markdown を生成</button>
-          <button class="btn-secondary" onclick="clearForm('weekly-journal')">クリア</button>
-        </div>
-      </div>
-      <div class="preview-box" id="preview-weekly-journal">
-        <div class="preview-header">
-          <span class="preview-label">Generated Markdown</span>
-          <button class="btn-copy" onclick="copyMarkdown('preview-weekly-journal-content', this)">コピー</button>
-        </div>
-        <pre class="markdown-preview" id="preview-weekly-journal-content"></pre>
-        <p class="filepath-hint">→ <span class="filepath-tag" id="filepath-weekly-journal">Journal/week-YYYY-WXX.md</span> として保存</p>
-      </div>
-    </div>
+    window.addEventListener('DOMContentLoaded', () => {
+      const now = new Date();
+      document.getElementById('dateDisplay').textContent =
+        now.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short' });
+      const w = getWeekNum(now);
+      document.getElementById('weekNum').textContent = `W${w.week}`;
+      const wStr = `${now.getFullYear()}-W${String(w.week).padStart(2, '0')}`;
+      document.getElementById('tw-week').value = wStr;
+      document.getElementById('jw-week').value = wStr;
+      const dateStr = formatDate(now);
+      const dayStr = DAYS_JA[now.getDay()];
+      document.getElementById('td-date').value = dateStr;
+      document.getElementById('td-day').value = dayStr;
+      document.getElementById('jd-date').value = dateStr;
+      document.getElementById('jd-day').value = dayStr;
+      document.getElementById('td-date').addEventListener('input', e => {
+        const d = new Date(e.target.value);
+        document.getElementById('td-day').value = isNaN(d) ? '' : DAYS_JA[d.getDay()];
+      });
+      document.getElementById('jd-date').addEventListener('input', e => {
+        const d = new Date(e.target.value);
+        document.getElementById('jd-day').value = isNaN(d) ? '' : DAYS_JA[d.getDay()];
+      });
+      buildCategoryInputs();
+    });
 
-    <div id="journal-daily" class="form-panel">
-      <div class="card">
-        <div class="form-grid2">
-          <div>
-            <label class="form-label">日付</label>
-            <input class="form-input" id="jd-date" placeholder="例：2026-04-07" />
-          </div>
-          <div>
-            <label class="form-label">曜日</label>
-            <input class="form-input" id="jd-day" placeholder="例：火曜日" readonly style="color:#888780;" />
-          </div>
-        </div>
-        <div class="form-row">
-          <label class="form-label">今日一言</label>
-          <textarea class="form-input form-textarea" id="jd-log" placeholder="今日を一言で。何があった？どんな気分？"></textarea>
-        </div>
-        <div class="btn-row">
-          <button class="btn-primary" onclick="generateDailyJournal()">Markdown を生成</button>
-          <button class="btn-secondary" onclick="clearForm('daily-journal')">クリア</button>
-        </div>
-      </div>
-      <div class="preview-box" id="preview-daily-journal">
-        <div class="preview-header">
-          <span class="preview-label">Generated Markdown</span>
-          <button class="btn-copy" onclick="copyMarkdown('preview-daily-journal-content', this)">コピー</button>
-        </div>
-        <pre class="markdown-preview" id="preview-daily-journal-content"></pre>
-        <p class="filepath-hint">→ <span class="filepath-tag" id="filepath-daily-journal">Journal/YYYY-MM-DD.md</span> として保存</p>
-      </div>
-    </div>
+    function getWeekNum(d) {
+      const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+      const dayNum = date.getUTCDay() || 7;
+      date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+      const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+      return { week: Math.ceil((((date - yearStart) / 86400000) + 1) / 7), year: date.getUTCFullYear() };
+    }
 
-    <div id="journal-log" class="form-panel">
-      <p class="section-title">Past entries</p>
-      <div class="card">
-        <div class="journal-entry">
-          <div class="journal-date">2026-04-02 · Thu</div>
-          <div class="journal-title">Life OS を GitHub で構築した日</div>
-          <div class="journal-preview">GitHub MCPをClaude Desktopに接続し、Life OSのダッシュボードをGitHub Pagesで公開した。SSH鍵の設定からconfig修正まで色々あったけど、最終的に動いた。</div>
-          <div class="journal-tags"><span class="tag">#work</span><span class="tag">#study</span><span class="tag">#win</span></div>
-        </div>
-      </div>
-      <div class="empty-state">
-        <p>これからここに日記が積み上がっていく</p>
-        <p class="empty-sub">日次・週次ログを追加して、GitHubにコミットしよう</p>
-      </div>
-    </div>
-  </div>
-</div>
+    function formatDate(d) {
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
 
-<script>
-const DAYS_JA = ['日曜日','月曜日','火曜日','水曜日','木曜日','金曜日','土曜日'];
-const TASK_CATEGORIES = [
-  { id: 'career',      label: '💼 キャリア・転職' },
-  { id: 'language',    label: '🗣 英語' },
-  { id: 'finance',     label: '💰 お金' },
-  { id: 'netherlands', label: '🇳🇱 オランダ準備' },
-  { id: 'learning',    label: '📚 学習' },
-  { id: 'other',       label: '🌱 その他' },
-];
-
-window.addEventListener('DOMContentLoaded', () => {
-  const now = new Date();
-  document.getElementById('dateDisplay').textContent =
-    now.toLocaleDateString('ja-JP', {year:'numeric', month:'2-digit', day:'2-digit', weekday:'short'});
-  const w = getWeekNum(now);
-  document.getElementById('weekNum').textContent = `W${w.week}`;
-  const wStr = `${now.getFullYear()}-W${String(w.week).padStart(2,'0')}`;
-  document.getElementById('tw-week').value = wStr;
-  document.getElementById('jw-week').value = wStr;
-  const dateStr = formatDate(now);
-  const dayStr = DAYS_JA[now.getDay()];
-  document.getElementById('td-date').value = dateStr;
-  document.getElementById('td-day').value = dayStr;
-  document.getElementById('jd-date').value = dateStr;
-  document.getElementById('jd-day').value = dayStr;
-  document.getElementById('td-date').addEventListener('input', e => {
-    const d = new Date(e.target.value);
-    document.getElementById('td-day').value = isNaN(d) ? '' : DAYS_JA[d.getDay()];
-  });
-  document.getElementById('jd-date').addEventListener('input', e => {
-    const d = new Date(e.target.value);
-    document.getElementById('jd-day').value = isNaN(d) ? '' : DAYS_JA[d.getDay()];
-  });
-  buildCategoryInputs();
-});
-
-function getWeekNum(d) {
-  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-  const dayNum = date.getUTCDay() || 7;
-  date.setUTCDate(date.getUTCDate() + 4 - dayNum);
-  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
-  return { week: Math.ceil((((date - yearStart) / 86400000) + 1) / 7), year: date.getUTCFullYear() };
-}
-
-function formatDate(d) {
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-
-function buildCategoryInputs() {
-  const container = document.getElementById('tw-categories');
-  container.innerHTML = '';
-  TASK_CATEGORIES.forEach(cat => {
-    const div = document.createElement('div');
-    div.className = 'task-category';
-    div.innerHTML = `
+    function buildCategoryInputs() {
+      const container = document.getElementById('tw-categories');
+      container.innerHTML = '';
+      TASK_CATEGORIES.forEach(cat => {
+        const div = document.createElement('div');
+        div.className = 'task-category';
+        div.innerHTML = `
       <div class="task-category-label">${cat.label}</div>
       <div class="task-inputs" id="cat-${cat.id}">
         <div class="task-input-row">
@@ -462,156 +1109,178 @@ function buildCategoryInputs() {
       </div>
       <button class="btn-add-task" onclick="addRow('cat-${cat.id}','タスクを入力')">＋ 追加</button>
     `;
-    container.appendChild(div);
-  });
-}
-
-function switchTab(name) {
-  const names = ['dashboard','tasks','journal'];
-  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', names[i] === name));
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === 'tab-'+name));
-}
-
-function switchFormTab(group, name) {
-  const container = document.getElementById('tab-' + group);
-  container.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
-  container.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
-  event.target.classList.add('active');
-  document.getElementById(group + '-' + name).classList.add('active');
-}
-
-function addRow(listId, placeholder) {
-  const list = document.getElementById(listId);
-  const row = document.createElement('div');
-  row.className = 'task-input-row';
-  row.innerHTML = `<input class="form-input" placeholder="${placeholder}" /><button class="btn-remove" onclick="removeRow(this)">×</button>`;
-  list.appendChild(row);
-  row.querySelector('input').focus();
-}
-
-function removeRow(btn) {
-  const row = btn.closest('.task-input-row');
-  const list = row.parentElement;
-  if (list.querySelectorAll('.task-input-row').length > 1) {
-    row.remove();
-  } else {
-    row.querySelector('input').value = '';
-  }
-}
-
-function toggle(el) {
-  el.querySelector('.checkbox').classList.toggle('done');
-  el.querySelector('.task-text').classList.toggle('done');
-}
-
-function getInputValues(listId) {
-  return Array.from(document.querySelectorAll(`#${listId} input`))
-    .map(i => i.value.trim()).filter(v => v);
-}
-
-function generateWeeklyTask() {
-  const week = document.getElementById('tw-week').value.trim() || 'YYYY-WXX';
-  const range = document.getElementById('tw-range').value.trim() || 'MM/DD〜MM/DD';
-  const focus = document.getElementById('tw-focus').value.trim();
-  const carryover = getInputValues('tw-carryover-list');
-  let md = `# 📋 週次タスク｜${week}（${range}）\n\n`;
-  md += `_更新日：${formatDate(new Date())}_\n\n---\n\n`;
-  if (focus) md += `## 🎯 今週のフォーカス\n\n${focus}\n\n---\n\n`;
-  md += `## ✅ 今週のタスク\n\n`;
-  TASK_CATEGORIES.forEach(cat => {
-    const tasks = getInputValues(`cat-${cat.id}`);
-    if (tasks.length) {
-      md += `### ${cat.label}\n`;
-      tasks.forEach(t => { md += `- [ ] ${t}\n`; });
-      md += '\n';
+        container.appendChild(div);
+      });
     }
-  });
-  if (carryover.length) {
-    md += `## 📦 先週からの持ち越し\n\n`;
-    carryover.forEach(t => { md += `- [ ] ${t}\n`; });
-    md += '\n';
-  }
-  showPreview('preview-weekly-task', 'preview-weekly-task-content', md);
-  document.getElementById('filepath-weekly-task').textContent = `Tasks/${week}.md`;
-}
 
-function generateDailyTask() {
-  const date = document.getElementById('td-date').value.trim() || formatDate(new Date());
-  const day = document.getElementById('td-day').value.trim();
-  const tasks = getInputValues('td-task-list');
-  const memo = document.getElementById('td-memo').value.trim();
-  let md = `# 📌 日次タスク｜${date}（${day}）\n\n---\n\n`;
-  md += `## 明日やること\n\n`;
-  if (tasks.length) { tasks.forEach(t => { md += `- [ ] ${t}\n`; }); } else { md += `- [ ] \n`; }
-  if (memo) md += `\n---\n\n## メモ\n\n${memo}\n`;
-  showPreview('preview-daily-task', 'preview-daily-task-content', md);
-  document.getElementById('filepath-daily-task').textContent = `Tasks/${date}.md`;
-}
+    function switchTab(name) {
+      const names = ['dashboard', 'tasks', 'journal'];
+      document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('active', names[i] === name));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === 'tab-' + name));
+    }
 
-function generateWeeklyJournal() {
-  const week = document.getElementById('jw-week').value.trim() || 'YYYY-WXX';
-  const range = document.getElementById('jw-range').value.trim() || 'MM/DD〜MM/DD';
-  const oneliner = document.getElementById('jw-oneliner').value.trim();
-  const wins = getInputValues('jw-wins');
-  const misses = getInputValues('jw-misses');
-  const insights = document.getElementById('jw-insights').value.trim();
-  const nextfocus = document.getElementById('jw-nextfocus').value.trim();
-  let md = `# 📓 週次振り返り｜${week}（${range}）\n\n`;
-  md += `_記入日：${formatDate(new Date())}（日曜）_\n\n---\n\n`;
-  if (oneliner) md += `## 今週一言\n\n${oneliner}\n\n---\n\n`;
-  if (wins.length) { md += `## ✅ 達成したこと\n\n`; wins.forEach(w => { md += `- ${w}\n`; }); md += '\n'; }
-  if (misses.length) { md += `## 😓 できなかったこと・持ち越し\n\n`; misses.forEach(m => { md += `- ${m}\n`; }); md += '\n'; }
-  if (insights) md += `## 💡 気づき・学び\n\n${insights}\n\n`;
-  if (nextfocus) md += `## 来週のフォーカス\n\n${nextfocus}\n`;
-  showPreview('preview-weekly-journal', 'preview-weekly-journal-content', md);
-  document.getElementById('filepath-weekly-journal').textContent = `Journal/week-${week}.md`;
-}
+    function switchFormTab(group, name) {
+      const container = document.getElementById('tab-' + group);
+      container.querySelectorAll('.form-tab').forEach(t => t.classList.remove('active'));
+      container.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById(group + '-' + name).classList.add('active');
+    }
 
-function generateDailyJournal() {
-  const date = document.getElementById('jd-date').value.trim() || formatDate(new Date());
-  const day = document.getElementById('jd-day').value.trim();
-  const log = document.getElementById('jd-log').value.trim();
-  let md = `# ✏️ 日次ログ｜${date}（${day}）\n\n---\n\n`;
-  md += `一言：${log || ''}\n`;
-  showPreview('preview-daily-journal', 'preview-daily-journal-content', md);
-  document.getElementById('filepath-daily-journal').textContent = `Journal/${date}.md`;
-}
+    function addRow(listId, placeholder) {
+      const list = document.getElementById(listId);
+      const row = document.createElement('div');
+      row.className = 'task-input-row';
+      row.innerHTML = `<input class="form-input" placeholder="${placeholder}" /><button class="btn-remove" onclick="removeRow(this)">×</button>`;
+      list.appendChild(row);
+      row.querySelector('input').focus();
+    }
 
-function showPreview(boxId, contentId, md) {
-  document.getElementById(contentId).textContent = md;
-  const box = document.getElementById(boxId);
-  box.classList.add('visible');
-  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
+    function removeRow(btn) {
+      const row = btn.closest('.task-input-row');
+      const list = row.parentElement;
+      if (list.querySelectorAll('.task-input-row').length > 1) {
+        row.remove();
+      } else {
+        row.querySelector('input').value = '';
+      }
+    }
 
-function copyMarkdown(contentId, btn) {
-  const text = document.getElementById(contentId).textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = 'コピー済 ✓';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2000);
-  });
-}
+    function toggle(el) {
+      el.querySelector('.checkbox').classList.toggle('done');
+      el.querySelector('.task-text').classList.toggle('done');
+    }
 
-function clearForm(formName) {
-  const previewMap = { 'weekly-task': 'preview-weekly-task', 'daily-task': 'preview-daily-task', 'weekly-journal': 'preview-weekly-journal', 'daily-journal': 'preview-daily-journal' };
-  if (formName === 'weekly-task') {
-    document.getElementById('tw-focus').value = '';
-    document.getElementById('tw-range').value = '';
-    buildCategoryInputs();
-    document.querySelectorAll('#tw-carryover-list input').forEach(i => i.value = '');
-  } else if (formName === 'daily-task') {
-    document.getElementById('td-memo').value = '';
-    document.querySelectorAll('#td-task-list input').forEach(i => i.value = '');
-  } else if (formName === 'weekly-journal') {
-    ['jw-range','jw-oneliner','jw-insights','jw-nextfocus'].forEach(id => document.getElementById(id).value = '');
-    document.querySelectorAll('#jw-wins input, #jw-misses input').forEach(i => i.value = '');
-  } else if (formName === 'daily-journal') {
-    document.getElementById('jd-log').value = '';
-  }
-  const previewId = previewMap[formName];
-  if (previewId) document.getElementById(previewId).classList.remove('visible');
-}
-</script>
+    function getInputValues(listId) {
+      return Array.from(document.querySelectorAll(`#${listId} input`))
+        .map(i => i.value.trim()).filter(v => v);
+    }
+
+    function generateWeeklyTask() {
+      const week = document.getElementById('tw-week').value.trim() || 'YYYY-WXX';
+      const range = document.getElementById('tw-range').value.trim() || 'MM/DD〜MM/DD';
+      const focus = document.getElementById('tw-focus').value.trim();
+      const carryover = getInputValues('tw-carryover-list');
+      let md = `# 📋 週次タスク｜${week}（${range}）\n\n`;
+      md += `_更新日：${formatDate(new Date())}_\n\n---\n\n`;
+      if (focus) md += `## 🎯 今週のフォーカス\n\n${focus}\n\n---\n\n`;
+      md += `## ✅ 今週のタスク\n\n`;
+      TASK_CATEGORIES.forEach(cat => {
+        const tasks = getInputValues(`cat-${cat.id}`);
+        if (tasks.length) {
+          md += `### ${cat.label}\n`;
+          tasks.forEach(t => { md += `- [ ] ${t}\n`; });
+          md += '\n';
+        }
+      });
+      if (carryover.length) {
+        md += `## 📦 先週からの持ち越し\n\n`;
+        carryover.forEach(t => { md += `- [ ] ${t}\n`; });
+        md += '\n';
+      }
+      showPreview('preview-weekly-task', 'preview-weekly-task-content', md);
+      document.getElementById('filepath-weekly-task').textContent = `Tasks/${week}.md`;
+    }
+
+    function generateDailyTask() {
+      const date = document.getElementById('td-date').value.trim() || formatDate(new Date());
+      const day = document.getElementById('td-day').value.trim();
+      const tasks = getInputValues('td-task-list');
+      const memo = document.getElementById('td-memo').value.trim();
+      let md = `# 📌 日次タスク｜${date}（${day}）\n\n---\n\n`;
+      md += `## 明日やること\n\n`;
+      if (tasks.length) { tasks.forEach(t => { md += `- [ ] ${t}\n`; }); } else { md += `- [ ] \n`; }
+      if (memo) md += `\n---\n\n## メモ\n\n${memo}\n`;
+      showPreview('preview-daily-task', 'preview-daily-task-content', md);
+      document.getElementById('filepath-daily-task').textContent = `Tasks/${date}.md`;
+    }
+
+    function generateWeeklyJournal() {
+      const week = document.getElementById('jw-week').value.trim() || 'YYYY-WXX';
+      const range = document.getElementById('jw-range').value.trim() || 'MM/DD〜MM/DD';
+      const oneliner = document.getElementById('jw-oneliner').value.trim();
+      const wins = getInputValues('jw-wins');
+      const misses = getInputValues('jw-misses');
+      const insights = document.getElementById('jw-insights').value.trim();
+      const nextfocus = document.getElementById('jw-nextfocus').value.trim();
+      let md = `# 📓 週次振り返り｜${week}（${range}）\n\n`;
+      md += `_記入日：${formatDate(new Date())}（日曜）_\n\n---\n\n`;
+      if (oneliner) md += `## 今週一言\n\n${oneliner}\n\n---\n\n`;
+      if (wins.length) { md += `## ✅ 達成したこと\n\n`; wins.forEach(w => { md += `- ${w}\n`; }); md += '\n'; }
+      if (misses.length) { md += `## 😓 できなかったこと・持ち越し\n\n`; misses.forEach(m => { md += `- ${m}\n`; }); md += '\n'; }
+      if (insights) md += `## 💡 気づき・学び\n\n${insights}\n\n`;
+      if (nextfocus) md += `## 来週のフォーカス\n\n${nextfocus}\n`;
+      showPreview('preview-weekly-journal', 'preview-weekly-journal-content', md);
+      document.getElementById('filepath-weekly-journal').textContent = `Journal/week-${week}.md`;
+    }
+
+    function generateDailyJournal() {
+      const date = document.getElementById('jd-date').value.trim() || formatDate(new Date());
+      const day = document.getElementById('jd-day').value.trim();
+      const log = document.getElementById('jd-log').value.trim();
+      let md = `# ✏️ 日次ログ｜${date}（${day}）\n\n---\n\n`;
+      md += `一言：${log || ''}\n`;
+      showPreview('preview-daily-journal', 'preview-daily-journal-content', md);
+      document.getElementById('filepath-daily-journal').textContent = `Journal/${date}.md`;
+    }
+
+    function showPreview(boxId, contentId, md) {
+      document.getElementById(contentId).textContent = md;
+      const box = document.getElementById(boxId);
+      box.classList.add('visible');
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function copyMarkdown(contentId, btn) {
+      const text = document.getElementById(contentId).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'コピー済 ✓';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2000);
+      });
+    }
+
+    function clearForm(formName) {
+      const previewMap = { 'weekly-task': 'preview-weekly-task', 'daily-task': 'preview-daily-task', 'weekly-journal': 'preview-weekly-journal', 'daily-journal': 'preview-daily-journal' };
+      if (formName === 'weekly-task') {
+        document.getElementById('tw-focus').value = '';
+        document.getElementById('tw-range').value = '';
+        buildCategoryInputs();
+        document.querySelectorAll('#tw-carryover-list input').forEach(i => i.value = '');
+      } else if (formName === 'daily-task') {
+        document.getElementById('td-memo').value = '';
+        document.querySelectorAll('#td-task-list input').forEach(i => i.value = '');
+      } else if (formName === 'weekly-journal') {
+        ['jw-range', 'jw-oneliner', 'jw-insights', 'jw-nextfocus'].forEach(id => document.getElementById(id).value = '');
+        document.querySelectorAll('#jw-wins input, #jw-misses input').forEach(i => i.value = '');
+      } else if (formName === 'daily-journal') {
+        document.getElementById('jd-log').value = '';
+      }
+      const previewId = previewMap[formName];
+      if (previewId) document.getElementById(previewId).classList.remove('visible');
+    }
+
+    // 入力内容をローカルストレージに保存する関数
+    function saveToLocal() {
+      const data = {
+        twWeek: document.getElementById('tw-week').value,
+        twFocus: document.getElementById('tw-focus').value,
+        // 他の項目も同様に追加
+      };
+      localStorage.setItem('lifeOS_data', JSON.stringify(data));
+      alert('入力内容をブラウザに保存しました！');
+    }
+
+    // ページ読み込み時にデータを復元する
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedData = localStorage.getItem('lifeOS_data');
+      if (savedData) {
+        const data = JSON.parse(savedData);
+        if (data.twWeek) document.getElementById('tw-week').value = data.twWeek;
+        if (data.twFocus) document.getElementById('tw-focus').value = data.twFocus;
+      }
+    });
+  </script>
 </body>
+
 </html>
