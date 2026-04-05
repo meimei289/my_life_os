@@ -1,51 +1,50 @@
-# 🎯 Goals & Roadmap
+# 🎯 目標・ロードマップ
 
-_Last updated: 2026-04-02_
-
----
-
-## 🌠 Long-term Vision (5–10 years)
-
-- [ ] 🇳🇱 Relocate to the Netherlands
-- [ ] 🎨 MFA in Europe (~age 40)
-- [ ] 🏢 Launch own business (~age 30)
+_最終更新：2026-04-05_
 
 ---
 
-## 🗺 Roadmap 2026
+## 🌠 長期ビジョン（5〜10年）
 
-### Q2 (Apr–Jun): Job Change
-- [x] AWS SAA prep complete
-- [ ] Active job search with JAC Recruitment
-- [ ] Target: Nature株式会社, システムアイ
-- [ ] June bonus → repay revolving credit → debit-only system
-
-### Q3 (Jul–Sep): English & Portfolio
-- [ ] IELTS 7.0 (exam: Aug target)
-- [ ] Build GitHub portfolio (React/TypeScript + AWS projects)
-- [ ] Freelance: えにし website launch (STUDIO)
-
-### Q4 (Oct–Dec): Consolidate
-- [ ] Settle into new job
-- [ ] Begin Netherlands relocation research
-- [ ] NISA / investment strategy review
+- [ ] 🇳🇱 オランダへ移住する
+- [ ] 🎨 ヨーロッパでMFA取得（40歳頃）
+- [ ] 🏢 自分の事業を立ち上げる（30歳頃）
 
 ---
 
-## 💡 Career Principles
+## 🗺 2026年ロードマップ
 
-- React/TypeScript or Java continuity
-- AWS hands-on experience
-- Product/SaaS environment
-- Remote-friendly
-- English usage opportunities
-- Salary target: 550万円+
+### Q2（4〜6月）：転職活動
+- [x] AWS SAA 取得完了
+- [ ] JACリクルートメントで転職活動中
+- [ ] 6月ボーナス → リボ払い完済 → デビットオンリー体制へ
+
+### Q3（7〜9月）：英語・ポートフォリオ
+- [ ] IELTS 7.0（目標：8月受験）
+- [ ] GitHubポートフォリオ構築（React/TypeScript + AWSプロジェクト）
+- [ ] フリーランス：えにしウェブサイト公開（STUDIO）
+
+### Q4（10〜12月）：定着・準備
+- [ ] 新しい職場に慣れる
+- [ ] オランダ移住リサーチ開始
+- [ ] NISA・投資戦略の見直し
 
 ---
 
-## 🌱 Personal Pillars
+## 💡 キャリア方針
 
-1. **Environment over willpower**
-2. **Stay private** — goals internal, actions external
-3. **Franklin's 13 virtues** — daily reflection
-4. **Radical consistency** — 3:50 AM, every day
+- Java または React/TypeScript を活かせる環境
+- AWS hands-on 環境
+- プロダクト・SaaS企業
+- リモート・ハイブリッド勤務
+- 英語を使う機会がある
+- 年収目標：550万円以上
+
+---
+
+## 🌱 行動の柱
+
+1. **環境設計を優先する**（意志力に頼らない）
+2. **目標は内に秘める**（行動で示す）
+3. **フランクリンの13徳**（毎日の振り返り）
+4. **徹底した一貫性**（毎朝3:50起床）
