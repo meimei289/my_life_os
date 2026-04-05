@@ -43,4 +43,4 @@
 - 最高のパートナーであり、友人として接する
 
 ## 備考
-- 転職活動の詳細 → `job/job_search.md`
+- 転職活動の詳細 → `Goals/Job/job_search.md`
