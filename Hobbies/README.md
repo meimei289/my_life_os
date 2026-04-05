@@ -1,6 +1,1 @@
-# 🎨 Hobbies
-
-## カテゴリ
-- ドラム
-- 読書（西洋・日本哲学、文学）
-- 旅行
+moved to Goals/Hobbies/README.md

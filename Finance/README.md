@@ -1,6 +1,1 @@
-# 💰 Finance
-
-## 管理項目
-- 収支記録
-- 貯蓄目標
-- オランダ移住資金
+moved to Goals/Finance/README.md
