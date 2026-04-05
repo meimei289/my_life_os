@@ -41,16 +41,20 @@ my_life_os/
 │   ├── netherlands/       # オランダ移住
 │   ├── health/            # 健康・習慣
 │   └── learning/          # 読書・学習
-├── Tasks/                 # 週次・日次タスク
-└── Journal/               # 日次ログ・振り返り
+├── Tasks/
+│   ├── week-YYYY-WXX.md   # 週次タスク（テンプレート）
+│   └── YYYY-MM-DD.md      # 日次タスク（テンプレート）
+└── Journal/
+    ├── week-YYYY-WXX.md   # 週次振り返り（テンプレート）
+    └── YYYY-MM-DD.md      # 日次ログ（テンプレート）
 ```
 
 ---
 
 ## 🔄 運用ルール
 
-1. **毎週日曜** — `Tasks/` を更新・先週をレビュー
-2. **毎日** — `Journal/` に一言ログ
+1. **毎週日曜** — `Tasks/` を更新 & `Journal/` で週の振り返りを追加
+2. **毎日** — `Tasks/` に翌日のタスクを記載 & `Journal/` に一言ログ
 3. **四半期ごと** — `Goals/roadmap.md` を見直す
 4. **マイルストーン達成時** — 各 `goal.md` の状態を更新（✅）
 
