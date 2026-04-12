@@ -1,46 +1,66 @@
-# 黒岩芽生について
+# 黒岩芽生 (Mei Kuroiwa) - Strategic Context
 
-## 基本プロフィール
-- 2001年8月29日生まれ（24歳）
-- 女性、横浜市在住
-- 職業：ソフトウェアエンジニア（Java/Spring Boot・React/TypeScript・Azure・Docker）
-- 資格：AWS SAA・TOEIC 850・基本情報技術者・Java Bronze・Azure AZ-900
+## 1. Profile & Expertise
+- **Profession:** Software Engineer (Java/Spring Boot, React/TypeScript, Azure, Docker)
+- **Background:** International Studies graduate. Experience studying in France.
+- **Skills:** AWS SAA, TOEIC 865, FE, Java Bronze, AZ-900.
+- **Core Values:** Pursuit of "Truth, Goodness, and Beauty" (真善美).
+- **Philosophical Foundation:** Discipline, Patience, Concentration, and Care (Erich Fromm).
 
-## 人物像・背景
-- 明治学院大学国際学部出身（欧州文化専攻、フランス印象派と浮世絵の比較研究で卒論）
-- 大学時代にフランスへ留学。その経験がオランダ移住の夢の原点となっている
-- 独学でエンジニアに転身。戦略的にキャリアを設計してきた
-- 趣味：ドラム・読書（西洋・日本哲学、文学）・旅行（東南アジアバックパッカー経験あり）
-- 目標は口に出さず、行動で示す主義
+## 2. Constraints & Resources (The "Mei Standard")
+When providing advice, assume I have the following high-level execution capabilities:
+- **Time:** Wake up at 3:50 AM. Peak productivity is in the early morning.
+- **Discipline:** Daily 5km run. Strict "Four Poisons Removal" diet (No wheat, sugar, dairy, or vegetable oils). 16:8 Autophagy.
+- **Mindset:** "I know nothing" (Socratic paradox). Action-first approach.
 
-## 日常の規律
-- 毎朝3:50起床
-- 毎日5kmランニング
-- 四毒抜き（小麦・砂糖・乳製品・植物油を除去）
-- オートファジー（16:8間欠的断食）
+## 3. Roadmaps
+| Timeline | Goal | Priority |
+| :--- | :--- | :--- |
+| **Short-term (2026/07)** | Career Pivot | New role in Japan (stepping stone to NL) |
+| **Mid-term (2027/04)** | Netherlands | Relocation, Tech job in NL, IELTS 7.0 |
+| **20s** | Entrepreneurship | Annual income: 100M JPY from own business |
+| **30s-50s** | Mastery & Legacy | MBA, MFA, and publishing 10 books |
+---
 
-## 最優先事項
-**短期：** 転職活動（2026年6月末退職・7月入社目標）
-**長期：** オランダ移住・英語習得（IELTS 7.0）
+## 4. Master Prompts
 
-## 価値観・行動原則
-- 真善美の追求
-- 規律・忍耐・集中・関心（エーリッヒ・フロム）
-- 自分は何も知らない、という前提で物事に向き合う
+### 1. The "Explain Like I'm Smart" Prompt
+Explain [complex topic] to me like I'm intelligent but unfamiliar with the jargon. 
+Use analogies to concepts from [field I know well - e.g., Art History, Philosophy, Drumming, AWS or Java/springboot backend engineering]. 
+Don't dumb it down—just make it accessible.
 
-## 目標
-| 時期 | 目標 |
-|------|------|
-| 25歳まで | オランダ移住・現地IT企業で勤務 |
-| 20代中に | 自分の事業で年収1億円 |
-| 30代 | MBA取得 |
-| 40代 | MFA取得 |
-| 50代 | 著書10冊 |
+### 2. The "Critic Mode" Prompt
+You are a harsh but fair critic. 
+Review this [content type]: [paste content]
+What's weak? What's unclear? What's missing? 
+Be brutal. I want to improve, not feel good. Identify risks based on my ambitious timeline.
 
-## Claudeへのお願い
-- 結論ファースト
-- 客観的な視点を保つ
-- 対話形式で私の思考を深掘りしていくスタイル
+### 3. The "Expert Interview" Prompt
+You are [specific expert - e.g., "A Lead Engineer at a Dutch Tech Scale-up"]. 
+I'm going to ask you questions about [topic]. 
+Answer from that expert's perspective with:
+- Specific technical details and real-world tradeoffs.
+- What's overhyped vs. underrated in the current market.
 
-## 備考
-- 転職活動の詳細 → `Goals/Job/job_search.md`
+### 4. The "Meeting Prep" Prompt
+I have a meeting with [person/role] about [topic] in 30 minutes. 
+Help me prepare:
+- Top 3 questions they'll likely ask.
+- Key points I should make (aligned with my values of Discipline and Truth).
+- Potential objections and how to address them.
+- One high-impact question I should ask them.
+
+### 5. The "Reverse Brief" Prompt
+I want to [achieve X outcome]. 
+Don't tell me how to do it yet. 
+First, ask me 5 clarifying questions to understand my constraints, resources, timeline, and actual goal.
+**Note:** Factor in my "3:50 AM routine" and high discipline as available resources for high-intensity strategies.
+
+### 6. The "Meta-Update" Prompt (Growth Loop)
+Based on our current conversation, identify any new insights, changed priorities, or updated goals for me. 
+Suggest specific edits to  `Goals/Aboutme.md` file to keep my context fresh.
+---
+
+## 5. References
+- Job Search Details: `Goals/Job/job_search.md`
+- Learning Logs: `Internal/Tech/learning_log.md`
